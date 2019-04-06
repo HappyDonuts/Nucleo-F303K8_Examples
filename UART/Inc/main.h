@@ -74,9 +74,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout);
-void tx_UART_float(UART_HandleTypeDef *huart, float data, uint32_t Timeout);
-void tx_UART_byte(UART_HandleTypeDef *huart, uint8_t data, uint32_t Timeout);
 
 /* USER CODE END EFP */
 

@@ -43,7 +43,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "print_UART.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,7 +73,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+//void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout);
+//void tx_UART_float(UART_HandleTypeDef *huart, float data, uint8_t decimales, uint32_t Timeout);
+//void tx_UART_byte(UART_HandleTypeDef *huart, uint8_t data, uint32_t Timeout);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -112,6 +114,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   uint16_t data = 4095;
+//  float data_float = 3.14592265;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -120,6 +123,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  tx_UART_int(&huart2, data, 10);
+//	  tx_UART_float(&huart2, data_float, 3, 10);
 	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
@@ -212,79 +216,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout)
-{
-
-	int size = 1;
-	uint8_t negativo = 0;
-
-	if (data < 0) {	// Si los pulsos
-		data = -data;
-		negativo = 1;
-	}
-
-	int numero = data;
-
-	while(numero > 9) {
-	  numero =  numero/10;
-	  size++;
-	}
-
-	char data_char[size];		// String de chars
-	uint8_t data_tx[size];	// String de uint8_t
-
-	sprintf(data_char,"%d", data);	// Cada numero del int en un char
-
-	for(uint8_t i=0; i<size; i++ ) {			// Casting de char a uint8_t
-		data_tx[i] = (uint8_t) data_char[i];
-	}
-
-	if (negativo) {		// Si el numero es negativo, transmite un "-" antes
-		uint8_t menos[] = "-";
-		HAL_UART_Transmit(huart, menos, 1, 10);
-	}
-	HAL_UART_Transmit(huart,data_tx,sizeof(data_tx), 10);	// TX por UART del array de uint8_t
-
-	uint8_t salto[] = "\r\n";
-	HAL_UART_Transmit(huart, salto, 2, 10);
-}
-
-void tx_UART_float(UART_HandleTypeDef *huart, float data, uint32_t Timeout) {
-	int p_entera = data/1;
-	int p_decimal = ((data - p_entera)*100)/1;
-
-	tx_UART_int(huart, p_entera, 10);
-
-	uint8_t punto[] = ".";
-	HAL_UART_Transmit(huart, punto, 1, 10);
-
-	if (p_decimal < 10) {
-		uint8_t cero[] = "0";
-		HAL_UART_Transmit(&huart2, cero, 1, 10);
-	}
-
-	tx_UART_int(huart, p_decimal, 10);
-
-	uint8_t salto[] = "\r\n";
-	HAL_UART_Transmit(huart, salto, 2, 10);
-}
-
-void tx_UART_byte(UART_HandleTypeDef *huart, uint8_t data, uint32_t Timeout){
-
-	uint8_t byte[8];
-	for(uint8_t i=0;i<8;i++){
-		if((data>>(7-i) & 0x01)==1){
-			byte[i]=0x31;
-		}
-		if((data>>(7-i) & 0x01)==0){
-			byte[i]=0x30;
-		}
-	}
-	HAL_UART_Transmit(huart, byte, sizeof(byte), 10);
-
-	uint8_t salto[] = "\r\n";
-	HAL_UART_Transmit(huart, salto, 2, 10);
-}
 
 /* USER CODE END 4 */
 

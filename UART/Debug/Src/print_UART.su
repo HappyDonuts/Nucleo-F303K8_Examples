@@ -1,0 +1,4 @@
+print_UART.c:3:6:tx_UART_int_nospace	40	dynamic
+print_UART.c:39:6:tx_UART_int	16	static
+print_UART.c:45:6:tx_UART_float	24	static
+print_UART.c:70:6:tx_UART_byte	32	static

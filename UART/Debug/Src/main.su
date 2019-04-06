@@ -1,6 +1,3 @@
-main.c:133:6:SystemClock_Config	72	static
-main.c:215:6:tx_UART_int	40	dynamic
-main.c:88:5:main	16	static
-main.c:252:6:tx_UART_float	24	static
-main.c:272:6:tx_UART_byte	32	static
-main.c:295:6:Error_Handler	0	static
+main.c:137:6:SystemClock_Config	72	static
+main.c:90:5:main	16	static
+main.c:226:6:Error_Handler	0	static
