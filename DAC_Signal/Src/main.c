@@ -55,6 +55,7 @@
 /* USER CODE BEGIN PD */
 #define N_MUESTRAS 50
 #define F_CLK 64000000
+#define PI 3.14159
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -125,47 +126,8 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   calculo_senal(50);
-
-  for (uint8_t i=0;i<50;i++){
-  tx_UART_int(&huart2, signal[i], 10 );
-  }
-//for (uint8_t i=50; i<88; i++){
-//	start_nota(i);
-//	HAL_Delay(1000);
-//}
-//  start_nota(1);
-//  HAL_Delay(1000);
-//  start_nota(2);
-//  HAL_Delay(1000);
-//  start_nota(3);
-//  HAL_Delay(1000);
-//  start_nota(4);
-//  HAL_Delay(1000);
-//  start_nota(5);
-//  HAL_Delay(1000);
-//  start_nota(6);
-//  HAL_Delay(1000);
-//  start_nota(7);
-//  HAL_Delay(1000);
-//  start_nota(8);
-//  HAL_Delay(1000);
-//  start_nota(9);
-//  HAL_Delay(1000);
-//  start_nota(10);
-//  HAL_Delay(1000);
-//  start_nota(11);
-//  HAL_Delay(1000);
-//  start_nota(12);
-//  HAL_Delay(1000);
-//  start_nota(13);
-//  HAL_Delay(1000);
-//  start_nota(14);
-//  HAL_Delay(1000);
-//  start_nota(15);
-//  HAL_Delay(1000);
-//  start_nota(1);
-
-  //stop_nota();
+  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+  HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
 
@@ -280,9 +242,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 1;
+  htim2.Init.Prescaler = 31999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 29091;
+  htim2.Init.Period = 79;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -418,12 +380,7 @@ void dac_signal(void) {
 
 void calculo_senal(uint8_t duty_cycle){
 	for (uint8_t i=0; i<N_MUESTRAS;i++){
-		if (i<duty_cycle*N_MUESTRAS/100) {
-			signal[i] =  4095;
-		}
-		else {
-			signal[i] = 0;
-		}
+			signal[i] = (sin(i*2*PI/N_MUESTRAS)+1)*(4095+1)/2;
 	}
 }
 
@@ -432,53 +389,12 @@ void set_timer_DAC(uint8_t PS, uint16_t T){
 	__HAL_TIM_SET_AUTORELOAD(&htim2, T-1);   // Do 7 (nota mas aguda)
 }
 
-void start_nota(uint8_t nota){
-	float f_nota = 27.50 * pow(1.059463094, nota-1);
 
-	uint16_t t_timer = round(F_CLK/2/(N_MUESTRAS*f_nota));
 
-	set_timer_DAC(2, t_timer);
-	HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
-	HAL_TIM_Base_Start_IT(&htim2);
-}
 
 void stop_nota(void){
 	HAL_DAC_Stop(&hdac1, DAC_CHANNEL_1);
 	HAL_TIM_Base_Stop_IT(&htim2);
-}
-
-void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout)
-{
-
-	int size = 1;
-	uint8_t negativo = 0;
-
-	if (data < 0) {	// Si los pulsos
-		data = -data;
-		negativo = 1;
-	}
-
-	int numero = data;
-
-	while(numero > 9) {
-	  numero =  numero/10;
-	  size++;
-	}
-
-	char data_char[size];		// String de chars
-	uint8_t data_tx[size];	// String de uint8_t
-
-	sprintf(data_char,"%d", data);	// Cada numero del int en un char
-
-	for(uint8_t i=0; i<size; i++ ) {			// Casting de char a uint8_t
-		data_tx[i] = (uint8_t) data_char[i];
-	}
-
-	if (negativo) {		// Si el numero es negativo, transmite un "-" antes
-		uint8_t menos[] = "-";
-		HAL_UART_Transmit(huart, menos, 1, 10);
-	}
-	HAL_UART_Transmit(huart,data_tx,sizeof(data_tx), 10);	// TX por UART del array de uint8_t
 }
 
 /* USER CODE END 4 */
