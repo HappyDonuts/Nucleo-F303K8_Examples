@@ -1312,7 +1312,7 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
                 0x00000683       0x22 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu/crtn.o
 OUTPUT(UART.elf elf32-littlearm)
 
-.debug_info     0x00000000     0xea85
+.debug_info     0x00000000     0xea73
  .debug_info    0x00000000     0x102a Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal.o
  .debug_info    0x0000102a     0x14be Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.o
  .debug_info    0x000024e8     0x1094 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_dma.o
@@ -1320,12 +1320,12 @@ OUTPUT(UART.elf elf32-littlearm)
  .debug_info    0x00004568     0x1bc7 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rcc.o
  .debug_info    0x0000612f     0x2275 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_uart.o
  .debug_info    0x000083a4     0x118e Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_uart_ex.o
- .debug_info    0x00009532     0x12ae Src\main.o
- .debug_info    0x0000a7e0     0x1305 Src\print_UART.o
- .debug_info    0x0000bae5     0x134c Src\stm32f3xx_hal_msp.o
- .debug_info    0x0000ce31      0xf6d Src\stm32f3xx_it.o
- .debug_info    0x0000dd9e      0xc74 Src\system_stm32f3xx.o
- .debug_info    0x0000ea12       0x73 startup\startup_stm32f303x8.o
+ .debug_info    0x00009532     0x129c Src\main.o
+ .debug_info    0x0000a7ce     0x1305 Src\print_UART.o
+ .debug_info    0x0000bad3     0x134c Src\stm32f3xx_hal_msp.o
+ .debug_info    0x0000ce1f      0xf6d Src\stm32f3xx_it.o
+ .debug_info    0x0000dd8c      0xc74 Src\system_stm32f3xx.o
+ .debug_info    0x0000ea00       0x73 startup\startup_stm32f303x8.o
 
 .debug_abbrev   0x00000000     0x2008
  .debug_abbrev  0x00000000      0x2f5 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal.o
@@ -1412,7 +1412,7 @@ OUTPUT(UART.elf elf32-littlearm)
  .debug_line    0x00003971      0x2b7 Src\system_stm32f3xx.o
  .debug_line    0x00003c28       0x7f startup\startup_stm32f303x8.o
 
-.debug_str      0x00000000     0x24f5
+.debug_str      0x00000000     0x24ea
  .debug_str     0x00000000      0xc38 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal.o
                                 0xcd9 (size before relaxing)
  .debug_str     0x00000c38      0x2e1 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.o
@@ -1427,15 +1427,15 @@ OUTPUT(UART.elf elf32-littlearm)
                                0x1344 (size before relaxing)
  .debug_str     0x0000219b       0xf6 Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_uart_ex.o
                                 0xd48 (size before relaxing)
- .debug_str     0x00002291       0x7a Src\main.o
-                                0xd69 (size before relaxing)
- .debug_str     0x0000230b       0xad Src\print_UART.o
+ .debug_str     0x00002291       0x6f Src\main.o
+                                0xd58 (size before relaxing)
+ .debug_str     0x00002300       0xad Src\print_UART.o
                                 0xbfb (size before relaxing)
- .debug_str     0x000023b8       0x2b Src\stm32f3xx_hal_msp.o
+ .debug_str     0x000023ad       0x2b Src\stm32f3xx_hal_msp.o
                                 0xf65 (size before relaxing)
- .debug_str     0x000023e3       0xb8 Src\stm32f3xx_it.o
+ .debug_str     0x000023d8       0xb8 Src\stm32f3xx_it.o
                                 0xbec (size before relaxing)
- .debug_str     0x0000249b       0x5a Src\system_stm32f3xx.o
+ .debug_str     0x00002490       0x5a Src\system_stm32f3xx.o
                                 0x7ac (size before relaxing)
 
 .comment        0x00000000       0x7c

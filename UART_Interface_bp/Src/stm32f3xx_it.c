@@ -62,7 +62,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-extern uint8_t msg[2];
+extern uint8_t msg[1];
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/

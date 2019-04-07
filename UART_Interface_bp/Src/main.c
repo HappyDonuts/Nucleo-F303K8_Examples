@@ -43,7 +43,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "print_UART.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,7 +66,7 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t msg[2];
+uint8_t msg[1];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,7 +75,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -269,47 +269,10 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	uint16_t msg_int = ((uint16_t)msg[1] << 8) | msg[0];
-	tx_UART_int(&huart2, msg_int, 10);
+	HAL_UART_Transmit(&huart2, msg ,sizeof(msg), 10);
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 }
 
-void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout)
-{
-
-	int size = 1;
-	uint8_t negativo = 0;
-
-	if (data < 0) {	// Si los pulsos
-		data = -data;
-		negativo = 1;
-	}
-
-	int numero = data;
-
-	while(numero > 9) {
-	  numero =  numero/10;
-	  size++;
-	}
-
-	char data_char[size];		// String de chars
-	uint8_t data_tx[size];	// String de uint8_t
-
-	sprintf(data_char,"%d", data);	// Cada numero del int en un char
-
-	for(uint8_t i=0; i<size; i++ ) {			// Casting de char a uint8_t
-		data_tx[i] = (uint8_t) data_char[i];
-	}
-
-	if (negativo) {		// Si el numero es negativo, transmite un "-" antes
-		uint8_t menos[] = "-";
-		HAL_UART_Transmit(huart, menos, 1, 10);
-	}
-	HAL_UART_Transmit(huart,data_tx,sizeof(data_tx), 10);	// TX por UART del array de uint8_t
-
-	uint8_t salto[] = "\r\n";
-	HAL_UART_Transmit(huart, salto, 2, 10);
-}
 /* USER CODE END 4 */
 
 /**
