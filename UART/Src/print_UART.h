@@ -9,6 +9,8 @@
 #define PRINT_UART_H_
 
 #include "stm32f3xx_hal.h"
+//#include "stm32f1xx_hal.h"
+
 
 void tx_UART_int_nospace(UART_HandleTypeDef *huart, int data, uint32_t Timeout);
 void tx_UART_int(UART_HandleTypeDef *huart, int data, uint32_t Timeout);
