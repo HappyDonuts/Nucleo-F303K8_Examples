@@ -114,7 +114,24 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	uint8_t mensaje[] = "Hola";
+  uint8_t nota_on[3];
+   	nota_on[0] = 0b10010000;
+   	nota_on[1] = 0;
+   	nota_on[2] = 0;
+
+   	uint8_t nota_off[3];
+   	nota_off[0] = 0b00000000;
+   	nota_off[1] = 0;
+   	nota_off[2] = 0;
+
+   	for(uint8_t i=1;i<89;i++){
+   		nota_on[1]= nota_on[1]+1;
+   		HAL_UART_Transmit(&huart1, nota_on, sizeof(nota_on), 10);
+  		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_3);
+  		HAL_Delay(500);
+  		HAL_UART_Transmit(&huart1, nota_off, sizeof(nota_off), 10);
+  		HAL_Delay(500);
+   	}
 
   /* USER CODE END 2 */
 
@@ -122,9 +139,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	HAL_Delay(2000);
-	// Tx un mensaje MIDI, note on, cada 2 segundos
-	HAL_UART_Transmit(&huart1, mensaje, sizeof(mensaje), 10);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -191,7 +205,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 31250;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
