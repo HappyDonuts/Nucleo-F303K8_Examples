@@ -1,0 +1,14 @@
+
+ADC_test/.settings/language.settings.xml
+Blink_Timer/.settings/language.settings.xml
+Button/.settings/language.settings.xml
+Button_timer/.settings/language.settings.xml
+DAC_Signal/.settings/language.settings.xml
+DAC_test/.settings/language.settings.xml
+LED_BLink/.settings/language.settings.xml
+PWM_Buttons/.settings/language.settings.xml
+PWM_test/.settings/language.settings.xml
+UART/.settings/language.settings.xml
+UART_Interface_bp/.settings/language.settings.xml
+UART_Rx/.settings/language.settings.xml
+UART_Tx/.settings/language.settings.xml
