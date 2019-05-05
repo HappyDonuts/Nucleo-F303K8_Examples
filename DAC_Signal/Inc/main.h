@@ -76,7 +76,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 void dac_signal(void);
 void calculo_senal(uint8_t duty_cycle);
-void set_timer_DAC(uint8_t PS, uint16_t T);
+void set_timer_DAC(uint16_t PS, uint16_t T);
 void start_nota(uint8_t nota);
 void stop_nota(void);
 void tx_UART_float(UART_HandleTypeDef *huart, float data, uint32_t Timeout);

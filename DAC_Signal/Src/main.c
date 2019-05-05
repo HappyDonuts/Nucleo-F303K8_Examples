@@ -126,6 +126,7 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   calculo_senal(50);
+//  set_timer_DAC(32000, 20);
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
   HAL_TIM_Base_Start_IT(&htim2);
 
@@ -244,7 +245,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 31999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 79;
+  htim2.Init.Period = 80;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -384,19 +385,16 @@ void calculo_senal(uint8_t duty_cycle){
 	}
 }
 
-void set_timer_DAC(uint8_t PS, uint16_t T){
+void set_timer_DAC(uint16_t PS, uint16_t T){
 	__HAL_TIM_SET_PRESCALER(&htim2, PS-1);
 	__HAL_TIM_SET_AUTORELOAD(&htim2, T-1);   // Do 7 (nota mas aguda)
 }
 
-
-
-
-void stop_nota(void){
-	HAL_DAC_Stop(&hdac1, DAC_CHANNEL_1);
-	HAL_TIM_Base_Stop_IT(&htim2);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim==&htim2){
+		dac_signal();
+	}
 }
-
 /* USER CODE END 4 */
 
 /**

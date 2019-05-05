@@ -7,4 +7,4 @@ stm32f3xx_it.c:158:6:SVC_Handler	0	static
 stm32f3xx_it.c:171:6:DebugMon_Handler	0	static
 stm32f3xx_it.c:184:6:PendSV_Handler	0	static
 stm32f3xx_it.c:197:6:SysTick_Handler	0	static
-stm32f3xx_it.c:218:6:TIM2_IRQHandler	8	static
+stm32f3xx_it.c:218:6:TIM2_IRQHandler	0	static
