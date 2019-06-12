@@ -43,7 +43,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ssd1306.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,8 +65,9 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-int16_t n_pulsos_a = 0;
-int16_t n_pulsos_b = 0;
+uint8_t datos[2];
+uint8_t frec = 0;
+uint8_t duty = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -112,41 +113,20 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  set_oled_addr(0x78);
-   ssd1306_sel_I2C(&hi2c1);
-   SSD1306_Init ();
-
-   SSD1306_UpdateScreen();
-   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_2);
-//   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_1);
-
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  n_pulsos_a = (TIM2->CNT);
-	  n_pulsos_a = n_pulsos_a/4;
-	  if(n_pulsos_a < 0){
-		  n_pulsos_a = 0;
-		  TIM2->CNT = 0;
-	  }
-//	  n_pulsos_b = (TIM3->CNT);
-//	  n_pulsos_b = n_pulsos_b/4;
-//	  if(n_pulsos_b < 0){
-//		  n_pulsos_b = 0;
-//		  TIM3->CNT = 0;
-//	  }
 
-	  SSD1306_Putint(n_pulsos_a, 1);
-//	  SSD1306_Putint(n_pulsos_b, 2);
-	  SSD1306_UpdateScreen();
-	  HAL_Delay(20);
+  }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+
   /* USER CODE END 3 */
 }
 
@@ -202,7 +182,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 38400;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -248,7 +228,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if (huart == &huart2){
+		frec = datos[0];
+		duty = datos[1];
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_3);
+		__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+	}
+}
 /* USER CODE END 4 */
 
 /**
