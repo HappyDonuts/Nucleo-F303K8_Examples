@@ -1,7 +1,7 @@
-main.c:70:5:main	424	static
-main.c:122:6:SystemClock_Config	96	static
-main.c:166:13:MX_ADC1_Init	48	static
-main.c:229:13:MX_USART2_UART_Init	8	static
-main.c:264:13:MX_GPIO_Init	40	static
-main.c:286:7:check_ADC	40	static
-main.c:307:6:Error_Handler	4	static
+main.c:71:5:main	416	static
+main.c:121:6:SystemClock_Config	96	static
+main.c:165:13:MX_ADC1_Init	48	static
+main.c:228:13:MX_USART2_UART_Init	8	static
+main.c:263:13:MX_GPIO_Init	40	static
+main.c:285:7:check_ADC	56	static
+main.c:313:6:Error_Handler	4	static

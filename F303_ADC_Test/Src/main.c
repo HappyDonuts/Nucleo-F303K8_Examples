@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "print_UART.h"
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,7 +97,7 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   uint16_t rawValues[200] ;
-  float value_adc;
+  uint16_t value_adc;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,9 +105,7 @@ int main(void)
   while (1)
   {
 	  value_adc = check_ADC(&hadc1, rawValues, 200);
-
-	  tx_UART_double(&huart2, value_adc,3, 10);
-
+	  tx_UART_int(&huart2, value_adc, 10);
 
     /* USER CODE END WHILE */
 
@@ -284,19 +283,26 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 float check_ADC(ADC_HandleTypeDef *hadc, uint16_t *pData, uint16_t Size){
-	float data_adc;
+	double data_adc;
+	double processed_adc;
 	for (uint8_t i=0;i<Size;i++){
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1, 1000);
 		pData[i] = HAL_ADC_GetValue(&hadc1);
 		HAL_ADC_Stop(&hadc1);
-		data_adc += pData[i]*3.3/4095;
+		data_adc = pData[i]*3300/4095;
+		processed_adc += data_adc;
 
-		HAL_Delay(2); // Sustituir por timer
+		HAL_Delay(1); // Sustituir por timer
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_3);
 	}
-	data_adc = data_adc/Size;
-	return data_adc;
+
+	processed_adc = processed_adc/Size;
+	processed_adc = processed_adc/(10*0.908);
+	processed_adc = round(processed_adc);
+	processed_adc = processed_adc*10;
+
+	return processed_adc;
 }
 /* USER CODE END 4 */
 
