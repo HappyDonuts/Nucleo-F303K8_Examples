@@ -1,0 +1,2 @@
+mcp4725.c:22:6:mcp4725_init	16	static
+mcp4725.c:27:6:mcp4725_setVoltage	24	static

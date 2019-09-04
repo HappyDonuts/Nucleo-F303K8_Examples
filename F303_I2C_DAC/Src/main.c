@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "mcp4725.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,12 +47,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t mcp4725_address = 0xC0; //0xC4 - other address
-uint8_t mcp4725_read = 0x01;
-uint8_t mcp4725_dac = 0x40;  // Writes data to the DAC
-uint8_t mcp4725_dac_eeprom = 0x60;  // Writes data to the DAC and the EEPROM (persisting the assigned value after reset)
 
-uint8_t buffer[3];
 
 /* USER CODE END PV */
 
@@ -102,19 +97,17 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  uint16_t value = 2;
-
-  buffer[0] = mcp4725_dac_eeprom;	// Persists after reset
-//  buffer[0] = mcp4725_dac;
-  buffer[1] = (value / 16);       // Upper data bits     (D11.D10.D9.D8.D7.D6.D5.D4)
-  buffer[2] = (value % 16) << 4;  // Lower data bits     (D3.D2.D1.D0.x.x.x.x)
-  HAL_I2C_Master_Transmit(&hi2c1, mcp4725_address, buffer, 3, 1000);
+  mcp4725_init(&hi2c1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  mcp4725_setVoltage(1000, 1);
+	  HAL_Delay(3000);
+	  mcp4725_setVoltage(3000, 1);
+	  HAL_Delay(3000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

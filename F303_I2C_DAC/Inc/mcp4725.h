@@ -13,13 +13,13 @@
 
 /**
  * @brief  Initializes MCP4725 DAC I2C
- * @param  None
+ * @param  hi2c: I2C peripheric chosen
  * @retval None
  */
-void mcp4725_init(void);
+void mcp4725_init(I2C_HandleTypeDef *hi2c);
 
 /**
- * @brief  Initializes SSD1306 LCD
+ * @brief  Set a voltage on the ADC
  * @param  value: DAC value, up to 4095
  * @param  eeprom: If set to 1, writes on EEPROM, else just DAC
  * @retval None

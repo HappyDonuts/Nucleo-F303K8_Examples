@@ -1,4 +1,4 @@
-Src/main.o: ../Src/main.c ../Inc/main.h \
+Src/mcp4725.o: ../Src/mcp4725.c ../Inc/mcp4725.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
  ../Inc/stm32f3xx_hal_conf.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h \
@@ -24,10 +24,9 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
- ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Inc/mcp4725.h
+ ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
 
-../Inc/main.h:
+../Inc/mcp4725.h:
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
 
@@ -80,5 +79,3 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h:
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
-
-../Inc/mcp4725.h:
