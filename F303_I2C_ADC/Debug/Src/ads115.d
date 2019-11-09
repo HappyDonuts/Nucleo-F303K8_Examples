@@ -1,4 +1,4 @@
-Src/ads115.o: ../Src/ads115.c ../Src/ads115.h \
+Src/ads115.o: ../Src/ads115.c ../Inc/ads115.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
  ../Inc/stm32f3xx_hal_conf.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h \
@@ -26,7 +26,7 @@ Src/ads115.o: ../Src/ads115.c ../Src/ads115.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
 
-../Src/ads115.h:
+../Inc/ads115.h:
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
 

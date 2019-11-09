@@ -25,7 +25,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Src/ads115.h ../Src/print_UART.h
+ ../Inc/ads115.h ../Inc/ssd1306_basic.h ../Inc/fonts.h
 
 ../Inc/main.h:
 
@@ -81,6 +81,8 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
 
-../Src/ads115.h:
+../Inc/ads115.h:
 
-../Src/print_UART.h:
+../Inc/ssd1306_basic.h:
+
+../Inc/fonts.h:

@@ -21,7 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "ads115.h"
-#include "print_UART.h"
+#include "ssd1306_basic.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -99,15 +99,20 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  uint16_t reading;
   ads_t* ads_1 = ads_new(&hi2c1, 0x48);
+  ssd1306_t* ssd1306_1 = ssd1306_new(&hi2c1, 0x79);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  tx_UART_int(&huart2, ads_read(ads_1, 4, 0), 100);
-	  HAL_Delay(1);
+	  reading = ads_read(ads_1, 4, 0);
+	  SSD1306_Putint(ssd1306_1, reading, 1);
+	  SSD1306_UpdateScreen(ssd1306_1);
+	  HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

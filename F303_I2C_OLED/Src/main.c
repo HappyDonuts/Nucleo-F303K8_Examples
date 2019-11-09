@@ -19,11 +19,11 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <ssd1306_basic.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ssd1306.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,20 +92,19 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  set_oled_addr(0x78);
-  ssd1306_sel_I2C(&hi2c1);
-  SSD1306_Init ();
 
-double data = -3.0004;
+  ssd1306_t* ssd1306_1 = ssd1306_new(&hi2c1, 0x78); // 0x79
+
+double data = -3.0076;
 int data_i = -12003;
 uint8_t decimales = 4;
 
-SSD1306_Putdouble(data, decimales, 1);
-SSD1306_Putdouble(data, decimales, 2);
-SSD1306_Putint(data_i, 3);
-SSD1306_Putdouble(data, decimales, 4);
-SSD1306_Putdouble(data, decimales, 5);
-SSD1306_UpdateScreen();
+SSD1306_Putdouble(ssd1306_1, data, decimales, 1);
+SSD1306_Putdouble(ssd1306_1, data, decimales, 2);
+SSD1306_Putint(ssd1306_1, data_i, 3);
+SSD1306_Putdouble(ssd1306_1, data, decimales, 4);
+SSD1306_Putdouble(ssd1306_1, data, decimales, 5);
+SSD1306_UpdateScreen(ssd1306_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
