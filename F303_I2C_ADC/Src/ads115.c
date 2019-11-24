@@ -70,6 +70,10 @@ uint16_t ads_voltageConv(uint16_t reading, uint8_t gain){
 
 /**
  * @brief  Reads an analog value using the ADC
+ * @note  First reading:   250 us (72 MHz)
+ * 		  Later readings:  150 us (72 MHz)
+ * @note  Wait at least 15 ms after changing mux
+ * @note  Do not change gain once sent
  * @param  *ads: variable corresponding to the module targeted
  * @param  mux: channel of the ADC:
  * 			0: 0 and 1		1: 0 and 3
@@ -83,7 +87,7 @@ uint16_t ads_voltageConv(uint16_t reading, uint8_t gain){
  * @retval Voltage read by the module (mV)
  */
 uint16_t ads_read(ads_t *ads, uint8_t mux, uint8_t gain){
-	if ((ads->mux != mux) & (ads->gain != gain)){
+	if ((ads->mux != mux) | (ads->gain != gain)){
 		ads->mux = mux;
 		ads->gain = gain;
 		ads_write(ads);

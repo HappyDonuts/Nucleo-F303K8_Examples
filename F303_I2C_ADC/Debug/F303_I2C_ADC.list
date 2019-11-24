@@ -7933,7 +7933,7 @@ uint16_t ads_read(ads_t *ads, uint8_t mux, uint8_t gain){
  80038f2:	70fb      	strb	r3, [r7, #3]
  80038f4:	4613      	mov	r3, r2
  80038f6:	70bb      	strb	r3, [r7, #2]
-	if ((ads->mux != mux) & (ads->gain != gain)){
+	if ((ads->mux != mux) | (ads->gain != gain)){
  80038f8:	687b      	ldr	r3, [r7, #4]
  80038fa:	7a5b      	ldrb	r3, [r3, #9]
  80038fc:	78fa      	ldrb	r2, [r7, #3]
@@ -7950,7 +7950,7 @@ uint16_t ads_read(ads_t *ads, uint8_t mux, uint8_t gain){
  8003912:	2301      	movne	r3, #1
  8003914:	2300      	moveq	r3, #0
  8003916:	b2db      	uxtb	r3, r3
- 8003918:	4013      	ands	r3, r2
+ 8003918:	4313      	orrs	r3, r2
  800391a:	b2db      	uxtb	r3, r3
  800391c:	2b00      	cmp	r3, #0
  800391e:	d008      	beq.n	8003932 <ads_read+0x4a>
