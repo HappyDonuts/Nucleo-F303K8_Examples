@@ -47,8 +47,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
-
+mcp_t* mcp_1; //DAC module
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,16 +96,16 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  mcp4725_init(&hi2c1);
+  mcp_1 = mcp_new(&hi2c1, 0xC0); //0xC4 - other address
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  mcp4725_setVoltage(1000, 1);
+	  mcp_write(mcp_1, 1000, 1);
 	  HAL_Delay(3000);
-	  mcp4725_setVoltage(3000, 1);
+	  mcp_write(mcp_1, 3000, 1);
 	  HAL_Delay(3000);
     /* USER CODE END WHILE */
 

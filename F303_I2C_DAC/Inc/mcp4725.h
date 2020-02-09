@@ -1,27 +1,44 @@
 /**
   ******************************************************************************
-  * @file           : mcp4725.h
-  * @brief          : I2C DAC library header
-  * @Author			: Javier Morales
-
+  * @file    mcp4725.h
+  * @author  Javier Morales
+  * @brief   Header file of mcp4725 I2C DAC module.
   *
+  * https://github.com/HappyDonuts
   ******************************************************************************
   */
 
-#include "stm32f3xx_hal.h"
 //#include "stm32f1xx_hal.h"
+#include "stm32f3xx_hal.h"
+#include <stdlib.h>
+
+typedef struct mcp_t {
+	uint8_t addr;
+	I2C_HandleTypeDef *hi2c;
+	uint8_t buffer[3];
+} mcp_t;
 
 /**
- * @brief  Initializes MCP4725 DAC I2C
- * @param  hi2c: I2C peripheric chosen
- * @retval None
+ * @brief  Creates new mcp_t variable corresponding to a mcp module
+ * @param  *hi2c: I2C peripheral from the mcu
+ * @param  addr: I2C address used by the module
+ * @retval mcp_t variable corresponding to the mcp module
  */
-void mcp4725_init(I2C_HandleTypeDef *hi2c);
+mcp_t* mcp_new(I2C_HandleTypeDef *hi2c, uint8_t addr);
 
 /**
- * @brief  Set a voltage on the ADC
- * @param  value: DAC value, up to 4095
- * @param  eeprom: If set to 1, writes on EEPROM, else just DAC
+ * @brief  Initialization of mcp4725 module
+ * @param  *mcp: mcp variable corresponding to the module targeted
+ * @param  *hi2c: I2C peripheral from the mcu
+ * @param  addr: I2C address used by the module
  * @retval None
  */
-void mcp4725_setVoltage(uint16_t value, uint8_t eeprom);
+void mcp_init(mcp_t *mcp, I2C_HandleTypeDef *hi2c, uint8_t addr);
+
+/**
+ * @brief  Writes a value on the mcp4725 DAC module
+ * @param  value: From 0 to 4095 (12 bits) value to be written on the DAC
+ * @param  eeprom: If 1, saves the value on eeprom (persistence after reset)
+ * @retval None
+ */
+void mcp_write(mcp_t *mcp, uint16_t value, uint8_t eeprom);
